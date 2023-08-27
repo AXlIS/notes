@@ -7,13 +7,13 @@ import (
 	"github.com/AXlIS/notes/internal/model"
 	"github.com/AXlIS/notes/internal/repository"
 	"github.com/dgrijalva/jwt-go"
-	"github.com/spf13/viper"
+	"os"
 	"time"
 )
 
 var (
-	salt       = viper.GetString("auth.salt")
-	singingKey = viper.GetString("auth.singingKey")
+	salt       = os.Getenv("SALT")
+	singingKey = os.Getenv("SINGING_KEY")
 	tokenTTL   = 12 * time.Hour
 )
 

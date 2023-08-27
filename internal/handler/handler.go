@@ -24,6 +24,7 @@ func (h *Handler) InitRoutes() *chi.Mux {
 		})
 
 		r.Route("/notes", func(r chi.Router) {
+			r.Use(h.userIdentity)
 			r.Post("/", h.createNote)
 			r.Get("/", h.getAllNotes)
 			r.Get("/{id}", h.getNoteByID)

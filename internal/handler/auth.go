@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/AXlIS/notes/internal/model"
+	"github.com/lib/pq"
 	"io"
 	"net/http"
 )
@@ -26,6 +27,13 @@ func (h *Handler) singUp(w http.ResponseWriter, r *http.Request) {
 
 	_, err = h.services.Authorization.CreateUser(input)
 	if err != nil {
+		pgErr, ok := err.(*pq.Error)
+		if ok {
+			if pgErr.Code == "23505" {
+				newErrorResponse(w, http.StatusInternalServerError, "user with this username already exists")
+				return
+			}
+		}
 		newErrorResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -56,7 +64,7 @@ func (h *Handler) login(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		if errors.As(err, &sql.ErrNoRows) {
-			newErrorResponse(w, http.StatusNotFound, "invalid username or password")
+			newErrorResponse(w, http.StatusUnauthorized, "invalid username or password")
 			return
 		}
 
