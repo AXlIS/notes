@@ -4,6 +4,10 @@ db:
   username: "postgres"
   password: "password"
   host: "db"
-  port: "5432"
+  port: "5436"
   dbname: "postgres"
   sslmode: "disable"
+
+auth:
+  salt: "inpx98ere9r9asdf"
+  singingKey: "nmcv3c21bd+f4hgf4+sdfg4s+984sd6f4"

@@ -7,6 +7,7 @@ import (
 	"github.com/AXlIS/notes/internal/server"
 	"github.com/AXlIS/notes/internal/service"
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"os"

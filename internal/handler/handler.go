@@ -16,5 +16,20 @@ func NewHandler(services *service.Service) *Handler {
 func (h *Handler) InitRoutes() *chi.Mux {
 	router := chi.NewRouter()
 
+	router.Route("/api/v1", func(r chi.Router) {
+
+		r.Route("/auth", func(r chi.Router) {
+			r.Post("/login", h.login)
+			r.Post("/sing-up", h.singUp)
+		})
+
+		r.Route("/notes", func(r chi.Router) {
+			r.Post("/", h.createNote)
+			r.Get("/", h.getAllNotes)
+			r.Get("/{id}", h.getNoteByID)
+		})
+
+	})
+
 	return router
 }
