@@ -31,6 +31,11 @@ func (h *Handler) createNote(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if err := h.services.Corrector.ValidateText(&input); err != nil {
+		newErrorResponse(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
 	_, err = h.services.Note.Create(userID, input)
 	if err != nil {
 		newErrorResponse(w, http.StatusInternalServerError, err.Error())

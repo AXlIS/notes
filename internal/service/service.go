@@ -17,14 +17,20 @@ type Note interface {
 	GetByID(userID, noteID int) (model.Note, error)
 }
 
+type Corrector interface {
+	ValidateText(*model.Note) error
+}
+
 type Service struct {
 	Authorization
+	Corrector
 	Note
 }
 
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		Authorization: NewAuthService(repos.Authorization),
+		Corrector:     NewCorrectorService(),
 		Note:          NewNoteService(repos.Note),
 	}
 }
