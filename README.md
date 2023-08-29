@@ -112,3 +112,6 @@ Header:
   "text": "text"
 }
 ```
+
+# Тестирование 
+Протестировать API можно с помощью Postman коллекции `Notes Service.postman_collection.json` 
